@@ -1,0 +1,34 @@
+import math
+import matplotlib.pyplot as plt
+
+
+def count_derangements(n):
+    """完全順列の数え上げ"""
+    unions_size = 0
+    for k in range(1, n + 1):
+        unions_size += (-1) ** (k - 1) * math.factorial(n) // math.factorial(k)
+    return math.factorial(n) - unions_size
+
+
+def derangement_probability(n):
+    """!n / n!"""
+    return count_derangements(n) / math.factorial(n)
+
+
+def main():
+    MAX_N = 20
+    n = list(range(1, MAX_N + 1))
+    P = [derangement_probability(x) for x in n]
+
+    inv_e = [1 / math.exp(1)] * len(n)
+
+    plt.scatter(n, P, label="P(n)")
+    plt.plot(n, inv_e, label="1/e", color="gray", linewidth=1)
+    plt.xticks(ticks=n)
+    plt.title("Hat-Check Lady Problem")
+    plt.legend()
+    plt.show()
+
+
+if __name__ == "__main__":
+    main()
